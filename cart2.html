@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách giỏ hàng</title>
+    <script src="https://kit.fontawesome.com/706d205872.js" crossorigin="anonymous"></script>
+    <script src="sanPham.js"></script>
+    <script src="giohang.js"></script>
+    <script src="hotro.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .img {
+            width: 100%;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .gio-hang {
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 4px;
+            padding: 20px;
+            margin: auto;
+            margin-top: 20px;
+            max-width: 1100px;
+        }
+
+        .item-gio-hang {
+            display: flex;
+            flex-direction: row;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .item-gio-hang .hinhAnh img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .item-gio-hang .hinhAnh,
+        .soLuong,
+        .tongTien,
+        .hanhDong {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .item-gio-hang .gia {
+            flex: 2;
+        }
+
+        .item-gio-hang .ten {
+            flex: 3;
+        }
+
+        .item-gio-hang .giaGoc {
+            text-decoration: line-through;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .item-gio-hang .gia .giaBan {
+            color: #CD1818;
+        }
+
+        .item-gio-hang .hanhDong i:hover {
+            color: #CD1818;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="index.html"><img src="img/logo.png"></a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="shop.html">Shop page</a></li>
+                        <li class="dropdown dropdown-small">
+                            <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Single product<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="single-product.html">Smart Phone</a></li>
+                                <li><a href="#">Laptop</a></li>
+                                <li><a href="#">PC product</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="cart2.html">Cart</a></li>
+                        <li><a href="checkout.html">Checkout</a></li>
+                        <li><a href="#">Category</a></li>
+                        <li><a href="#">Others</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <div class="gio-hang" id="gio-hang">
+        <!-- Danh sách item giỏ hàng -->
+    </div>
+    <script>
+        hienThiDanhSachItemGioHang();
+
+        function hienThiDanhSachItemGioHang() {
+            /* B1: Lấy danh sách item giỏ hàng dưới local storage lên */
+            var danhSachItemGioHang = layGioHangTuLocalStorage();
+            /* B2: chuyển danh sách item giỏ hàng thành html */
+            var HTML = chuyenDanhSachItemGioHangSangHTML(danhSachItemGioHang)
+            console.log(danhSachItemGioHang);
+            /* B3: Truy cập node item giỏ hàng để hiển thị html danh sách item giỏ hàng lên */
+            var nodeGioHang = document.getElementById('gio-hang');
+            nodeGioHang.innerHTML = HTML;
+
+
+        }
+        /* Mô tả: Chuyển 1 danh sách thành html
+           input: danh sách item giỏ hàng
+           output: html hiển thị danh sách item giỏ hàng */
+           function chuyenDanhSachItemGioHangSangHTML(danhSachItemGioHang) {
+            var htmlTong = '';
+            for (var i = 0; i < danhSachItemGioHang.length; i++) {
+                htmlTong = htmlTong + chuyenDoiTuongItemGioHangSangHTML(danhSachItemGioHang[i]);
+            }
+            return htmlTong;
+        }
+        /* Mô tả: chuyển 1 đối tượng thành html 
+           input: Đối tượng giỏ hàng    
+           output: html hiển thị item giỏ hàng */
+           function chuyenDoiTuongItemGioHangSangHTML(itemGioHang) {
+            var sanPham = laySanPhamTheoId(itemGioHang.idSanPham);
+            var tongTien = itemGioHang.soLuong * sanPham.tinhGiaBan();
+
+            var html = '   <div class="item-gio-hang">  ' +
+            '           <div class="hinhAnh">  ' +
+            '               <img src="' + sanPham.hinhAnh + '">  ' +
+            '           </div>  ' +
+            '           <p class="ten">' + sanPham.ten + '</p>  ' +
+            '           <div class="gia">  ' +
+            '               <span class="giaGoc">' + sanPham.giaGoc + '</span>  ' +
+            '               <span class="giaBan">' + sanPham.tinhGiaBan() + '</span>  ' +
+            '           </div>  ' +
+            '           <input type="number" class="soLuong" value="' + itemGioHang.soLuong + '">  ' +
+            '           <p class="tongTien">' + tongTien + '</p>  ' +
+            '           <div class="hanhDong">  ' +
+            '               <i onclick=xoaSP('+sanPham.idSanPham+') class="far fa-trash-alt"></i>  ' +
+            '           </div>  ' +
+            '      </div>  ';
+
+            return html;
+
+        }
+    </script>
+</body>
+
+</html>

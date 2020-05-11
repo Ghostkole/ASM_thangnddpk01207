@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .form {
+            width: 30%;
+            padding: 1px solid #ddd;
+            box-shadow: 2px 2px 4px #ddd;
+            padding: 30px;
+            margin: auto;
+            margin-top: 50px;
+
+        }
+
+        .form label,
+        input,
+        button {
+            width: 100%;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .form input,
+        button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            font-size: 12px;
+            color: red;
+            font-style: italic;
+            margin-top: 12px;
+            line-height: 12px;
+            height: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <label for="hoTen">Họ Tên</label>
+        <input type="text" id="hoTen">
+        <!-- Node thông báo lỗi cho hoTen -->
+        <label id="hienThiLoiHoTen" for="hoTen" class="error"></label>
+
+        <label for="maSoSinhVien">Mã Số Sinh Viên</label>
+        <input type="number" id="maSoSinhVien">
+        <!-- Node thông báo lỗi cho soDienThoai -->
+        <label id="hienThiLoiMaSoSinhVien" for="maSoSinhVien" class="error"></label>
+
+        <label for="email">Email</label>
+        <input type="text" id="email">
+        <label id="hienThiLoiEmail" for="email" class="error"></label>
+
+        <label for="soDT">Số Điện Thoại</label>
+        <input type="number" id="soDT">
+        <label id="hienThiLoiSoDT" for="soDT" class="error"></label>
+
+        <label for="soCMND">CMND</label>
+        <input type="number" id="soCMND">
+        <label id="hienThiLoiSoCMND" for="soCMND" class="error"></label>
+        <button onclick="onClickDangKy()"><a href="login.html" style="text-decoration: none; color: black;">Đăng ký</a></button>
+    </div>
+    <script>
+     function onClickDangKy() {
+        /* B1. Kiểm tra hợp lệ */
+        if (formDangKyHopLe() == true) {
+            /* B2: thực hiện đăng nhập */
+            return formDangKyHopLe();
+        }
+
+
+    }
+
+
+        /* Yêu cầu: Kiểm tra tính hợp lệ của form đăng nhập,nếu không không hợp lệ  thì hiển thị thông báo 
+        output: nếu hợp lệ thì trả về true 
+        : nếu không hợp lệ thì trả về false */
+        function formDangKyHopLe() {
+            var hopLe = true;
+            var nodeHoTen = document.getElementById('hoTen');
+            var nodeMaSoSinhVien = document.getElementById('maSoSinhVien');
+            var nodeEmail = document.getElementById('email');
+            var nodeSDT = document.getElementById('soDT');
+            var nodeSoCMND = document.getElementById('soCMND');
+            var hoTen = nodeHoTen.value;
+            var maSoSinhVien = nodeMaSoSinhVien.value;
+            var email = nodeEmail.value;
+            var soDT = nodeSDT.value;
+            var soCMND = nodeSoCMND.value;
+            /* Truy cập node báo lỗi  */
+            var nodeHienThiLoiHoTen = document.getElementById('hienThiLoiHoTen');
+            var nodeHienThiLoiMaSoSinhVien = document.getElementById('hienThiLoiMaSoSinhVien');
+            var nodeHienThiLoiEmail = document.getElementById('hienThiLoiEmail');
+            var nodeHienThiLoiSoDT = document.getElementById('hienThiLoiSoDT');
+            var nodeHienThiLoiSoCMND = document.getElementById('hienThiLoiSoCMND');
+            nodeHienThiLoiHoTen.innerHTML = '';
+            nodeHienThiLoiMaSoSinhVien.innerHTML = '';
+            nodeHienThiLoiEmail.innerHTML = '';
+            nodeHienThiLoiSoDT.innerHTML = '';
+            nodeHienThiLoiSoCMND.innerHTML = '';
+
+            console.log('Họ tên là: ' + hoTen);
+            console.log('Mã số sinh viên: ' + maSoSinhVien);
+            console.log('email là: ' + email);
+            console.log('Số điện thoại là: ' + soDT);
+            console.log('Số CMND là: ' + soCMND);
+
+            if (hoTen == null || hoTen.length <= 0) {
+                nodeHienThiLoiHoTen.innerHTML = 'Họ tên không được để trống';
+                hopLe = false;
+            }
+
+            if (maSoSinhVien == null || maSoSinhVien.length <= 0) {
+                nodeHienThiLoiMaSoSinhVien.innerHTML = 'Mã Số Sinh Viên không được bỏ trống';
+                hopLe = false;
+            }
+            if (email == null || email.length <= 0) {
+                nodeHienThiLoiEmail.innerHTML = 'Email không được bỏ trống';
+                hopLe = false;
+            }
+            if (soDT == null || soDT.length <= 0) {
+                nodeHienThiLoiSoDT.innerHTML = 'Số điện thoại không được bỏ trống';
+                hopLe = false;
+            }
+            if (soCMND == null || soCMND.length <= 0) {
+                nodeHienThiLoiSoCMND.innerHTML = 'CMND không được bỏ trống';
+                hopLe = false;
+            }
+            
+            return hopLe;
+
+        }
+    </script>
+</body>
+
+</html>

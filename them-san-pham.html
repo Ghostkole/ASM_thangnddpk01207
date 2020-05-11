@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Xây dựng chức năng thêm mới sản phẩm</title>
+	<script src="sanPham.js"></script>
+	<script src="hotro.js"></script>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="css/owl.carousel.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/responsive.css">
+	<style>
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+
+		.them-moi-san-pham {
+			width: 50%;
+			border: 1px solid #ddd;
+			margin: auto;
+			padding: 30px;
+			margin-top: 50px;
+			box-shadow: 2px 2px 5px #ddd;
+		}
+
+		.them-moi-san-pham label,
+		input {
+			width: 100%;
+			display: block;
+		}
+
+		.them-moi-san-pham label {
+			margin-top: 20px;
+
+		}
+
+		.them-moi-san-pham input {
+			margin-top: 5px;
+			padding: 10px 20px;
+			border: 1px solid #444444;
+			border-radius: 5px;
+		}
+
+		.them-moi-san-pham button {
+			width: 100%;
+			margin-top: 20px;
+			padding: 10px 20px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			background-color: #F7442E;
+		}
+
+		.them-moi-san-pham button:hover {
+			background-color: #C53624;
+		}
+		.them-moi-san-pham a{
+			text-decoration: none;
+			color: black;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="user-menu">
+						<ul>
+							<li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
+							<li><a href="them-san-pham.html"><i class="fa fa-heart"></i> Wishlist</a></li>
+							<li><a href="cart2.html"><i class="fa fa-user"></i> My Cart</a></li>
+							<li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
+							<li><a href="login.html"><i class="fa fa-user"></i> Login</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="mainmenu-area">
+		<div class="container">
+			<div class="row">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div> 
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="index.html">Home</a></li>
+						<li><a href="shop.html">Shop page</a></li>
+						<li class="dropdown dropdown-small">
+							<a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#">Single product<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="single-product.html">Smart Phone</a></li>
+								<li><a href="#">Laptop</a></li>
+								<li><a href="#">PC product</a></li>
+							</ul>
+						</li>
+						<li><a href="cart2.html">Cart</a></li>
+						<li><a href="checkout.html">Checkout</a></li>
+						<li><a href="#">Category</a></li>
+						<li><a href="#">Others</a></li>
+						<li><a href="#">Contact</a></li>
+					</ul>
+				</div>  
+			</div>
+		</div>
+	</div>
+	<div class="them-moi-san-pham">
+		<label for="hinhAnh">Hình ảnh sản phẩm</label>
+		<input type="text" id="hinhAnh">
+		<label id="hienThiLoiHinhAnh" for="hinhAnh" class="error"></label>
+
+		<label for="ten">Tên sản phẩm</label>
+		<input type="text" id="ten">
+		<label id="hienThiLoiTen" for="ten" class="error"></label>
+
+		<label for="giaGoc"> Giá Gốc</label>
+		<input type="number" id="giaGoc">
+		<label id="hienThiLoiGiaGoc" for="giaGoc" class="error"></label>
+
+		<label for="phanTramGiamGia">Giảm giá (0 - 1) %</label>
+		<input type="number" id="phanTramGiamGia">
+		<label id="hienThiLoiPhanTramGiamGia" for="phanTramGiamGia" class="error"></label>
+
+		<label for="khuVuc"> Khu Vực</label>
+		<input type="text" id="khuVuc">
+		<label id="hienThiLoiKhuVuc" for="khuVuc" class="error"></label>
+
+		<button onclick="onClickTaoSanPham()"><a  href="shop.html">Tạo sản phẩm</a></button>
+
+	</div>
+	<script>
+
+		var danhSachSanPham = JSON.parse(localStorage.getItem('danhSachSanPham'));
+		if (danhSachSanPham == null)
+			danhSachSanPham = new Array();
+		console.log(danhSachSanPham);
+
+		function onClickTaoSanPham() {
+			console.log('gọi hàm onClickTaoSanPham()');
+			/* 1.Truy cập các node để lấy được dữ liệu */
+			var nodeHinhAnh = document.getElementById('hinhAnh');
+			var hinhAnh = nodeHinhAnh.value;
+			console.log('Hình ảnh là: ' + hinhAnh);
+			nodeHinhAnh.value = '';
+
+			var nodeTen = document.getElementById('ten');
+			var ten = nodeTen.value;
+			console.log('Tên là : ' + ten);
+			nodeTen.value = '';
+
+			var nodeGiaGoc = document.getElementById('giaGoc');
+			var giaGoc = nodeGiaGoc.value;
+			console.log('Giá gốc là : ' + giaGoc);
+			nodeGiaGoc.value = '';
+
+			var nodePhanTramGiamGia = document.getElementById('phanTramGiamGia');
+			var phanTramGiamGia = nodePhanTramGiamGia.value;
+			console.log('Phần trăm giảm giá là: ' + phanTramGiamGia);
+			nodePhanTramGiamGia.value = '';
+
+			var nodeKhuvuc = document.getElementById('khuVuc');
+			var khuVuc = nodeKhuvuc.value;
+			console.log('Khu vực là: ' + khuVuc);
+			nodeKhuvuc.value = '';
+
+			/* 2.Tạo ra các đối tượng từ các dữ liệu người dùng nhập vào  */
+			var sanPham = taoDoiTuongSanPham(hinhAnh, ten, giaGoc, phanTramGiamGia, khuVuc, null);
+			console.log(sanPham);
+			console.log('Tên của sản phẩm nhập vào là ' + sanPham.ten + ' giá bán của sản phẩm là: ' + sanPham.tinhGiaBan());
+
+			/* 3. Đưa sản phẩm vào danh sách  */
+			danhSachSanPham.push(sanPham);
+			console.log('Danh sách các sản phẩm là: ');
+			console.log(danhSachSanPham);
+
+			/* Lưu trữ danh sách sản phẩm xuống local storage */
+			var jsonDanhSachSanPham = JSON.stringify(danhSachSanPham);
+			localStorage.setItem('danhSachSanPham', jsonDanhSachSanPham);
+			if (formKiemTra() == true) {
+
+			}
+		}
+
+		function formKiemTra(){
+			/* Kiểm tra, bắt lỗi */
+			var hopLe = true;
+			var nodeHinhAnh = document.getElementById('hinhAnh');
+			var nodeTen = document.getElementById('ten');
+			var nodeGiaGoc = document.getElementById('giaGoc');
+			var nodePhanTraGiamGia = document.getElementById('phanTramGiamGia');
+			var nodeKhuVuc = document.getElementById('khuVuc');
+			var hinhAnh = nodeHinhAnh.value;
+			var ten = nodeTen.value;
+			var giaGoc = nodeGiaGoc.value;
+			var phanTramGiamGia = nodePhanTraGiamGia.value;
+			var khuVuc = nodeKhuVuc.value;
+
+
+			/* Truy cập node báo lỗi  */
+			var nodeHienThiLoiHinhAnh = document.getElementById('hienThiLoiHinhAnh');
+			var nodeHienThiLoiTen = document.getElementById('hienThiLoiTen');
+			var nodeHienThiLoiGiaGoc = document.getElementById('hienThiLoiGiaGoc');
+			var nodeHienThiLoiPhanTramGiamGia = document.getElementById('hienThiLoiPhanTramGiamGia');
+			var nodeHienThiLoiKhuVuc = document.getElementById('hienThiLoiKhuVuc');
+			hienThiLoiHinhAnh.innerHTML = '';
+			nodeHienThiLoiTen.innerHTML = '';
+			nodeHienThiLoiGiaGoc.innerHTML = '';
+			nodeHienThiLoiPhanTramGiamGia.innerHTML = '';
+			nodeHienThiLoiKhuVuc.innerHTML = '';
+			console.log('Hình ảnh là: ' + hinhAnh);
+			console.log('Tên là: ' + ten);
+			console.log('Giá gốc là: ' + giaGoc);
+			console.log('Phần trăm giảm giá là: ' + phanTramGiamGia);
+			console.log('Khu vực là: ' + khuVuc);
+
+			if (hinhAnh == '') {
+				nodeHienThiLoiHinhAnh.innerHTML = 'Hình ảnh không được để trống';
+				hopLe = false;
+			}
+			if (ten == null) {
+				nodeHienThiLoiTen.innerHTML = 'Tên sản phẩm không được để trống';
+				hopLe = false;
+			} else if ((ten.length < 5) || (ten.length > 20)) {
+				nodeHienThiLoiTen.innerHTML = 'Tên sản phẩm phải nhập hơn 5 và trên 20 kí tự';
+				hopLe = false;
+			}
+			if (giaGoc == null || giaGoc.length <= 0) {
+				nodeHienThiLoiGiaGoc.innerHTML = 'Giá gốc không được để trống';
+				hopLe = false;
+			}
+			if (phanTramGiamGia == null || phanTramGiamGia.length <=0) {
+				nodeHienThiLoiPhanTramGiamGia.innerHTML = 'Phần trăm giảm giá không được để trống';
+				hopLe = false;
+			}
+			if (khuVuc == null || khuVuc.length <=0) {
+				nodeHienThiLoiKhuVuc.innerHTML = 'Khu vực không được để trống';
+				hopLe = false;
+			}
+			return hople;
+		}
+	</script>
+</body>
+
+</html>

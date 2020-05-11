@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm </title>
+    <script src="https://kit.fontawesome.com/797d9ea394.js" crossorigin="anonymous"></script>
+    <script src="sanPham.js"></script>
+    <script src="hotro.js"></script>
+    <script src="giohang.js"></script>
+    <link rel="stylesheet" href="csss/style.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="site-branding-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="logo">
+                        <h1><a href="index.html"><img src="img/logo.png" style="width: 170px; height: 65px; margin-left: 155px; "></a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End site branding area -->
+    
+    <div class="mainmenu-area">
+        <div class="container">
+            <div class="row">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div> 
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <ul class="menu-lv1">
+                            <li class="item-lv1">
+                                <a href="index.html" class="item-lv1-title">Home</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="shop.html" class="item-lv1-title">ShopPage</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="#" class="item-lv1-title">SingleProduct</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="cart2.html" class="item-lv1-title">Cart</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="checkout.html" class="item-lv1-title">CheckOut</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="#" class="item-lv1-title">Category</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="#" class="item-lv1-title">Others</a>
+                            </li>
+                            <li class="item-lv1">
+                                <a href="#" class="item-lv1-title">Contact</a>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+    <section id="product">
+
+    </section>
+    <div class="footer-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <center>
+                        <div class="copyright">
+                            <p>&copy; 2015 uCommerce. All Rights Reserved.</p>
+                        </div>
+                    </center>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="footer-card-icon" style="">
+                        <i class="fa fa-cc-discover"></i>
+                        <i class="fa fa-cc-mastercard"></i>
+                        <i class="fa fa-cc-paypal"></i>
+                        <i class="fa fa-cc-visa"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        /* B1: Lấy danh sách sản phẩm dưới local storage */
+        var jsonDanhSachSanPham = localStorage.getItem('danhSachSanPham');
+        var danhSachSanPham = JSON.parse(jsonDanhSachSanPham);
+        if (danhSachSanPham == null)
+            danhSachSanPham = new Array();
+
+        /* B2: Chuyển danh sách đối tượng sản phẩm sang đoạn html */
+        var html = chuyenDanhSachDoiTuongSanPhamThanhHTML(danhSachSanPham);
+
+        /* B3: Gắn đoạn html đó vào section product */
+        var nodeProduct = document.getElementById('product');
+        nodeProduct.innerHTML = html;
+
+        function onClickDuaVaoGioHang(idSanPham) {
+            alert("onclick đưa vào giỏ hàng với sản phẩm có id là : " + idSanPham);
+            /* Bước 1: Phân tích lưu trữ giỏ hàng như thế nào? Lưu trữ trong local storage */
+            /* Giỏ hàng: là một danh sách các đối tượng item giỏ hàng. item giỏ hàng bao gồm các thông tin 
+                         1. Sản phẩm là gì -> Sử dụng id của sản phẩm để lưu
+                         2. Số lượng bao nhiêu
+                         */
+
+                         /* Bước 2: Xây dựng hàm tạo nhanh item giỏ hàng */
+
+
+                         /* Bước 3: Lấy danh sách giỏ hàng có trong local storage -> Hàm để lấy toàn bộ item giỏ hàng  */
+                         var danhSachItemGioHang = layGioHangTuLocalStorage();
+
+                         /* Bước 4: Thêm item vào danh sách giỏ hàng  */
+                         var coTonTaiTrongDanhSachItemGioHang = false;
+                         for (var i = 0; i < danhSachItemGioHang.length; i++) {
+                            var itemGioHangHienTai = danhSachItemGioHang[i];
+
+                            /* Nếu tồn tại thì tăng số lượng  */
+                            if (itemGioHangHienTai.idSanPham == idSanPham) {
+                                danhSachItemGioHang[i].soLuong++;
+                                coTonTaiTrongDanhSachItemGioHang = true;
+                            }
+                        }
+                        /* Nếu không tồn tại -> tạo ra đối tượng và thêm vào danh sách item giỏ hàng */
+                        if (coTonTaiTrongDanhSachItemGioHang == false) {
+                            var itemGioHang = taoDoiTuongItemGioHang(idSanPham, 1);
+                            danhSachItemGioHang.push(itemGioHang);
+                        }
+
+                        /* Bước 5: Lưu trữ vào local storage */
+                        luuGioHangXuongLocalStorage(danhSachItemGioHang);
+                    }
+                </script>
+            </body>
+
+            </html>

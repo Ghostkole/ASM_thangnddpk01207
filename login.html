@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .form {
+            width: 30%;
+            padding: 1px solid #ddd;
+            box-shadow: 2px 2px 4px #ddd;
+            padding: 30px;
+            margin: auto;
+            margin-top: 50px;
+
+        }
+
+        .form label,
+        input,
+        button {
+            width: 100%;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .form input,
+        button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            font-size: 12px;
+            color: red;
+            font-style: italic;
+            margin-top: 12px;
+            line-height: 12px;
+            height: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form">
+        <label for="hoTen">Họ Tên</label>
+        <input type="text" id="hoTen">
+        <!-- Node thông báo lỗi cho hoTen -->
+        <label id="hienThiLoiHoTen" for="hoTen" class="error"></label>
+
+        <label for="maSSV">Mã Số Sinh Viên</label>
+        <input type="number" id="maSSV">
+        <!-- Node thông báo lỗi cho soDienThoai -->
+        <label id="hienThiLoiMaSoSinhVien" for="maSSV" class="error"></label>
+
+        <button onclick="onClickDangNhap()"><a href="index.html" style="text-decoration: none; color: black;">Đăng Nhập</a></button>
+        <button><a href="registation.html" style="text-decoration: none; color: black;">Đăng ký</a></button>
+    </div>
+    <script>
+        function onClickDangNhap() {
+            /* B1. Kiểm tra hợp lệ */
+            if (formDangNhapHopLe() == true) {
+                /* B2: thực hiện đăng nhập */
+                return formDangNhapHopLe();
+            }
+        }
+
+
+        /* Yêu cầu: Kiểm tra tính hợp lệ của form đăng nhập,nếu không không hợp lệ  thì hiển thị thông báo 
+        output: nếu hợp lệ thì trả về true 
+              : nếu không hợp lệ thì trả về false */
+        function formDangNhapHopLe() {
+            var hopLe = true;
+            var nodeHoTen = document.getElementById('hoTen');
+            var nodeMaSoSinhVien = document.getElementById('maSSV');
+            var hoTen = nodeHoTen.value;
+            var maSoSinhVien = nodeMaSoSinhVien.value;
+
+            /* Truy cập node báo lỗi  */
+            var nodeHienThiLoiHoTen = document.getElementById('hienThiLoiHoTen');
+            var nodeHienThiLoiMaSoSinhVien = document.getElementById('hienThiLoiMaSoSinhVien');
+            nodeHienThiLoiHoTen.innerHTML = '';
+            nodeHienThiLoiMaSoSinhVien.innerHTML = '';
+
+
+            console.log('Họ tên là: ' + hoTen);
+            console.log('Số điện thoại: ' + maSoSinhVien);
+
+            if (hoTen == null || hoTen.length <= 0) {
+                nodeHienThiLoiHoTen.innerHTML = 'Họ tên không được để trống';
+                hopLe = false;
+            }
+
+            if (maSoSinhVien == null || maSoSinhVien.length <= 0) {
+                nodeHienThiLoiMaSoSinhVien.innerHTML = 'Mã Số Sinh Viên không được bỏ trống';
+                hopLe = false;
+            }
+
+            return hopLe;
+
+        }
+    </script>
+</body>
+
+</html>
